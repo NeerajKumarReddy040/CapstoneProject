@@ -20,17 +20,17 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
-	<!--	<dependency>
-			Connect with underlying database
+	    <dependency>
+			
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
 		</dependency>
-		         MySql Conncector
+		         
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
 			<version>8.0.22</version>
-		</dependency>-->
+		</dependency>
 		         <!--AutoReload-->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
