@@ -3,7 +3,17 @@ package com.model;
 import java.util.Date;
 import java.util.List;
 
-import jakarta.persistence.*;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "learner")
@@ -15,24 +25,31 @@ public class Learner {
 	private int learnerId;
 
 	@Column(name = "fullname", nullable = false)
+	@NotEmpty(message ="FullName Required")
 	private String fullname;
 
 	@Column(name = "gender", length = 20)
+	@NotEmpty(message ="Gender Required")
 	private String gender;
 
 	@Column(name = "birthdate")
+	@NotNull(message ="Birthdate is Required")
 	private Date birthdate;
 
 	@Column(name = "address", length = 255)
+	@NotEmpty(message ="Address Required")
 	private String address;
 
 	@Column(name = "contact", length = 20)
+	@NotNull(message ="Contact Required")
 	private String contact;
 
-	@Column(name = "password_hash", nullable = false)
+	@Column(name = "password_hash")
+	@NotEmpty(message ="Password is Required")
 	private String passwordHash;
 
-	@Column(name = "email", nullable = false, unique = true)
+	@Column(name = "email", unique = true)
+	@NotEmpty(message ="Email is required")
 	private String email;
 
 	// One-to-Many relationship with Enrollment
@@ -139,4 +156,12 @@ public class Learner {
 				+ ", email=" + email + ", enrollment=" + enrollment + "]";
 	}
 
+	public Learner( 
+			 String email,String passwordHash) {
+		super();
+		this.passwordHash = passwordHash;
+		this.email = email;
+	}
+
+	
 }

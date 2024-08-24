@@ -17,4 +17,15 @@ public class LearnerService {
 		return learner1;
 	}
 	
+	public String verify(Learner learner) {
+		System.out.println("method called" + learner.getEmail());
+	    Learner credentials = learnerRepository.findByEmail(learner.getEmail());
+	    System.out.println("method called" + credentials);
+	    if (credentials != null && credentials.getPasswordHash().equals(learner.getPasswordHash())) {
+	    	System.out.println("ok called");
+	        return ("Credentails Matched");
+	    }
+	    return null;
+	}
+
 }

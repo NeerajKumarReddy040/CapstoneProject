@@ -9,6 +9,6 @@ import com.model.Learner;
 @Repository
 public interface LearnerRepository extends CrudRepository<Learner, Integer> {
 
-	
+	Learner findByEmail(String email);	
 
 }

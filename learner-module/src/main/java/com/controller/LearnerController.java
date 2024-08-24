@@ -1,7 +1,6 @@
 package com.controller;
 
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
+import com.dto.LearnerDTO;
 import com.model.Academy;
 import com.model.Learner;
 import com.service.EnrollmentService;
@@ -47,19 +47,25 @@ public class LearnerController {
 		return new ResponseEntity<>(register, HttpStatus.OK);
 	}
 	
+
+	// login
+	 @PostMapping("/login")
+	    public ResponseEntity<?> loginCustomer(@Valid @RequestBody LearnerDTO learnerlogin) {
+		 Learner l1 =learnerlogin.toEnity();
+	        String customer = learnerService.verify(l1); //changed Learner to string
+	        if (customer != null) {
+	            return ResponseEntity.ok(customer);
+	        } else {
+	            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Give proper email and password");
+	        }
+	    }
 	
-    @PostMapping("/login")
-    public ResponseEntity<?> Login(@RequestBody Learner login ){
-		return null;
-    
-    }
-	
-	
-//	 
+    // By SportName	 
 	@GetMapping("/sport/{sportName}") 
 	public ResponseEntity <?> getAcademyNamesBySportName(@PathVariable("sportName") String sportName) {
-		String url = baseUrl+ "/" + sportName;
 		System.out.println("called");
+		String url = baseUrl+ "/sport/" + sportName;
+		System.out.println(url);
 		ResponseEntity<List> academies= restTemplate.getForEntity(url, List.class);
 		if(academies.getStatusCode()==(HttpStatus.NO_CONTENT)) {
 			return new ResponseEntity<>("No acadameis found with given sportName", HttpStatus.NOT_FOUND);
@@ -71,23 +77,13 @@ public class LearnerController {
 		return null;
 	}
 
-//	@GetMapping("/sport/{sportName}") 
-//	public ResponseEntity<?> getAcademyNamesBySportName(@PathVariable("sportName") String sportName) {
-//	    String url = baseUrl + "/" + sportName;
-//	    ResponseEntity<List> academies = restTemplate.getForEntity(url, List.class);
-//	    if (academies.getStatusCode() == HttpStatus.NO_CONTENT) {
-//	        return new ResponseEntity<>("No academies found with given sportName", HttpStatus.NOT_FOUND);
-//	    } else if (academies.getStatusCode() == HttpStatus.OK) {
-//	        return academies;
-//	    }
-//	    return new ResponseEntity<>("Unexpected Error", HttpStatus.INTERNAL_SERVER_ERROR);
-//	}
+
 
 	
 	
 	// By AcademyId
 	@GetMapping("/{academy_id}") 
-	public ResponseEntity<?>  getBookById(@PathVariable("academy_id") int Id){
+	public ResponseEntity<?>  getBookById(@Valid @PathVariable("academy_id") int Id){
 		String url = baseUrl + "/"  + Id;
 		
 		 ResponseEntity<Academy> academyid =restTemplate.getForEntity(url,Academy.class);
