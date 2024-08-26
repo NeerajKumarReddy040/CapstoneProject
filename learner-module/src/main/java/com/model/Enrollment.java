@@ -20,6 +20,7 @@ public class Enrollment {
 	@Column(name = "enrollment_id")
 	private int enrollmentId;
 
+	
 	@Column(name = "academy_id", nullable = false)
 	private int academyId;
 

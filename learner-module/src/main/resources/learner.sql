@@ -19,5 +19,5 @@ CREATE TABLE enrolments (
     enrollment_date DATE,
     PRIMARY KEY (enrollment_id),
     FOREIGN KEY (learner_id) REFERENCES learner(learner_id),
-    FOREIGN KEY (academy_id) REFERENCES coaching_academy_details(academy_id)
+    
 );

@@ -23,27 +23,26 @@ public class AcademyController {
 
 	@Autowired
 	AcademyService academyService;
-	
-
 
 	@GetMapping("/{academy_id}")
 	public ResponseEntity<Academy> getAcademyById(@PathVariable("academy_id") int id) throws CustomException {
 		Optional<Academy> academy = academyService.getAcademyById(id);
-		if(academy.isPresent()) {
+		if (academy.isPresent()) {
 			return ResponseEntity.ok(academy.get());
-		}else {
-		   throw new CustomException("No Acadmey Record Found" + id);
+		} else {
+			throw new CustomException("No Acadmey Record Found" + id);
 		}
 	}
 
 	@GetMapping("/sport/{sportName}")
-	public ResponseEntity<List<Academy>>  getAcademiesBySportName(@PathVariable("sportName") String sportName) throws CustomException {
-		List<Academy> academyList= academyService.findAcademiesBySportName(sportName);
-		if((academyList.isEmpty())) {
+	public ResponseEntity<List<Academy>> getAcademiesBySportName(@PathVariable("sportName") String sportName)
+			throws CustomException {
+		List<Academy> academyList = academyService.findAcademiesBySportName(sportName);
+		if ((academyList.isEmpty())) {
 			throw new CustomException("No SportAcadmey Record Found for " + sportName);
-			}else {
-			return ResponseEntity.ok(academyList); 
-			
+		} else {
+			return ResponseEntity.ok(academyList);
+
 		}
 	}
 }

@@ -21,11 +21,11 @@ public class AcademyService {
 
 	public Optional<Academy> getAcademyById(int id) {
 		logger.info("academy details", academyRepository.findById(id));
-        return academyRepository.findById(id);
-    }
+		return academyRepository.findById(id);
+	}
 
 	public List<Academy> findAcademiesBySportName(String sportName) {
-		
+
 		return academyRepository.findAcademyBySportName(sportName);
 	}
 }
