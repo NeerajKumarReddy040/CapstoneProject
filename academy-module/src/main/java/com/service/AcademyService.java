@@ -25,6 +25,7 @@ public class AcademyService {
 	}
 
 	public List<Academy> findAcademiesBySportName(String sportName) {
+		logger.info("academy details based on sportname", academyRepository.findAcademyBySportName(sportName));
 
 		return academyRepository.findAcademyBySportName(sportName);
 	}

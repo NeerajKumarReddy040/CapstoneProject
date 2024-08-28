@@ -53,8 +53,8 @@ public class Learner {
 	private String email;
 
 	// One-to-Many relationship with Enrollment
-	@OneToMany(mappedBy = "learner", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	private List<Enrollment> enrollment;
+//	@OneToMany(mappedBy = "learner", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+//	private List<Enrollment> enrollment;
 
 	// getters and setters
 
@@ -122,16 +122,16 @@ public class Learner {
 		this.email = email;
 	}
 
-	public List<Enrollment> getEnrollment() {
-		return enrollment;
-	}
-
-	public void setEnrollment(List<Enrollment> enrollment) {
-		this.enrollment = enrollment;
-	}
+//	public List<Enrollment> getEnrollment() {
+//		return enrollment;
+//	}
+//
+//	public void setEnrollment(List<Enrollment> enrollment) {
+//		this.enrollment = enrollment;
+//	}
 
 	public Learner(String fullname, String gender, Date birthdate, String address, String contact, String passwordHash,
-			String email, List<Enrollment> enrollment) {
+			String email) {
 		super();
 
 		this.fullname = fullname;
@@ -141,7 +141,7 @@ public class Learner {
 		this.contact = contact;
 		this.passwordHash = passwordHash;
 		this.email = email;
-		this.enrollment = enrollment;
+//		this.enrollment = enrollment;
 	}
 
 	public Learner() {
@@ -153,7 +153,7 @@ public class Learner {
 	public String toString() {
 		return "Learner [learnerId=" + learnerId + ", fullname=" + fullname + ", gender=" + gender + ", birthdate="
 				+ birthdate + ", address=" + address + ", contact=" + contact + ", passwordHash=" + passwordHash
-				+ ", email=" + email + ", enrollment=" + enrollment + "]";
+				+ ", email=" + email + "]";
 	}
 
 	public Learner( 

@@ -1,6 +1,7 @@
 package com.service;
 
 import java.util.Date;
+import java.util.Objects;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,6 +15,7 @@ import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
 import com.controller.LearnerController;
+import com.exceptions.CustomException;
 import com.model.Academy;
 import com.model.Enrollment;
 import com.model.Learner;
@@ -31,7 +33,6 @@ public class EnrollmentService {
 	@Autowired
 	EnrollmentRepository enrollmentRepository;
 	
-	
 	@Autowired
 	RestTemplate restTemplate;
 
@@ -40,41 +41,35 @@ public class EnrollmentService {
 	
 	String baseUrl = "http://msacademy/academies";
 
-	public String enrollLearner(String learnerId, String academyId, String enrollmentDate) {
-		logger.info("entered");
-		
-			Enrollment enrollment = new Enrollment();
-//			enrollment.setEnrollmentDate(enrollmentDate);
-			String url = baseUrl + "/" + academyId;
-			
-			logger.info("url",url);
-//			Academy academy = academyRepository.findById(academyId)
-//					.orElseThrow(() -> new RuntimeException("Learner not found"));
-			ResponseEntity<Academy> academy = restTemplate.getForEntity(url, Academy.class);
-			
-			enrollment.setAcademyId(academy.getBody().getAcademyId());
+	public String enrollLearner(String learnerId, String academyId) {
+		logger.info("entered enrollLearner method");
 
-			
-			Learner learner = learnerRepository.findById(Integer.getInteger(learnerId))
-					.orElseThrow(() -> new RuntimeException("Learner not found"));
-			enrollment.setLearner(learner);
+		Enrollment enrollment = new Enrollment();
+		enrollment.setEnrollmentDate(new Date());
+		String url = baseUrl + "/" + academyId;
 
-			enrollmentRepository.save(enrollment);
-			return " Your Enrollment successful";
-		 
+		logger.info("url" + url);
+
+		ResponseEntity<Academy> academy = restTemplate.getForEntity(url, Academy.class);
+		System.out.println((academy.getBody().toString()));
+
+		enrollment.setAcademyId(Objects.requireNonNull(academy.getBody()).getAcademyId());
+
+		Learner learner = learnerRepository.findById(Integer.valueOf(learnerId))
+				.orElseThrow(() -> new RuntimeException("Learner not found"));
+		enrollment.setLearnerId(learner.getLearnerId());
+
+		enrollmentRepository.save(enrollment);
+		return ("Your Enrollment successful");
+
 	}
 
-	private boolean academyExists(int academyId) {
-		String url = baseUrl + "/" + academyId; // Ensure URL path matches the actual endpoint
-		try {
-
-			return restTemplate.getForObject(url, Academy.class) != null; // We only care if the object exists
-
-		} catch (HttpClientErrorException.NotFound e) {
-			return false; // Academy not found
-		} catch (Exception e) {
-			throw new RuntimeException("Error checking if academy exists: " + e.getMessage());
-		}
+	 public Enrollment getEnrollmentById(int enrollmentId) throws CustomException {
+	        return enrollmentRepository.findById(enrollmentId)
+	            .orElseThrow(() -> new CustomException("No Enrollment Record Found for ID: " + enrollmentId));
+	    }
 	}
 
-}
+	
+
+

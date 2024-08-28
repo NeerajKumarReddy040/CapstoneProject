@@ -26,10 +26,9 @@ public class Enrollment {
 
 	@Column(name = "enrollment_date")
 	private Date enrollmentDate;
-
-	@ManyToOne
-	@JoinColumn(name = "learner_id", nullable = false)
-	private Learner learner;
+	
+	@Column(name= "learner_id")
+	private Integer learnerId;
 
 	public int getEnrollmentId() {
 		return enrollmentId;
@@ -55,19 +54,20 @@ public class Enrollment {
 		this.enrollmentDate = enrollmentDate;
 	}
 
-	public Learner getLearner() {
-		return learner;
+	public Integer getLearnerId() {
+		return learnerId;
 	}
 
-	public void setLearner(Learner learner) {
-		this.learner = learner;
+	public void setLearnerId(Integer learnerId) {
+		this.learnerId = learnerId;
 	}
 
-	public Enrollment(int academyId, Date enrollmentDate, Learner learner) {
+
+	public Enrollment(int academyId, Date enrollmentDate, Integer learnerId) {
 		super();
 		this.academyId = academyId;
 		this.enrollmentDate = enrollmentDate;
-		this.learner = learner;
+		this.learnerId = learnerId;
 	}
 
 	public Enrollment() {
@@ -78,7 +78,9 @@ public class Enrollment {
 	@Override
 	public String toString() {
 		return "Enrollment [enrollmentId=" + enrollmentId + ", academyId=" + academyId + ", enrollmentDate="
-				+ enrollmentDate + ", learner=" + learner + "]";
+				+ enrollmentDate + ", learnerId=" + learnerId + "]";
 	}
+
+	
 
 }
