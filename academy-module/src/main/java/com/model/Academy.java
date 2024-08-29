@@ -17,13 +17,13 @@ public class Academy {
 	@Column(name = "academy_id")
 	private int academyId;
 
-	@Column(name = "academy_name", nullable = false, length = 255)
+	@Column(name = "academy_name",  length = 255)
 	private String academyName;
 
-	@Column(name = "sport_name", nullable = false, length = 255)
+	@Column(name = "sport_name",  length = 255)
 	private String sportName;
 
-	@Column(name = "address", nullable = false, length = 255)
+	@Column(name = "address",  length = 255)
 	private String address;
 
 	@Column(name = "contact_number", length = 20)

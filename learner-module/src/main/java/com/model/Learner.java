@@ -1,16 +1,12 @@
 package com.model;
 
 import java.util.Date;
-import java.util.List;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
@@ -51,10 +47,6 @@ public class Learner {
 	@Column(name = "email", unique = true)
 	@NotEmpty(message ="Email is required")
 	private String email;
-
-	// One-to-Many relationship with Enrollment
-//	@OneToMany(mappedBy = "learner", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-//	private List<Enrollment> enrollment;
 
 	// getters and setters
 
@@ -122,13 +114,7 @@ public class Learner {
 		this.email = email;
 	}
 
-//	public List<Enrollment> getEnrollment() {
-//		return enrollment;
-//	}
-//
-//	public void setEnrollment(List<Enrollment> enrollment) {
-//		this.enrollment = enrollment;
-//	}
+
 
 	public Learner(String fullname, String gender, Date birthdate, String address, String contact, String passwordHash,
 			String email) {

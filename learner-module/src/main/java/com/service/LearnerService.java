@@ -1,7 +1,7 @@
 package com.service;
 
-import java.time.LocalDate;
-import java.util.Date;
+
+
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -46,12 +46,12 @@ public class LearnerService {
 	         throw new CustomException("Phone number cannot be longer than 10 digits");
 	        }
 //		else if (learner.getBirthdate() != null) {
-//	        LocalDate today = LocalDate.now();
-//	        if (learner.getBirthdate().isAfter(today)) {
-//	            logger.error("Date of birth is in the future: {}", birthdate);
-//	            throw new CustomException("Date of birth cannot be in the future.");
-//	        }
-//	    }
+//		    LocalDate today = LocalDate.now();
+//		    if (learner.getBirthdate().isAfter(today)) { // Corrected to isAfter
+//		        logger.error("Date of birth is in the future: {}", learner.getBirthdate()); // Added learner.getBirthdate() to log
+//		        throw new CustomException("Date of birth cannot be in the future.");
+//		    }
+//		}
 		else {
 		logger.error("The Verification Failed for the Learner email:{}", learner.getEmail());
 			throw new CustomException("Already Email exits for Learner"); 
