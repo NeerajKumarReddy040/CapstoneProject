@@ -16,7 +16,6 @@ public class MainLearner {
 	RestTemplate restTemplate() {
 		return new RestTemplate();
 	}
-
 	public static void main(String[] args) {
 		SpringApplication.run(MainLearner.class, args);
 

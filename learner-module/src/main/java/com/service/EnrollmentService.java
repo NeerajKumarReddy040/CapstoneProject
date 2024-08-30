@@ -35,12 +35,11 @@ public class EnrollmentService {
 	String baseUrl = "http://msacademy/academies";
 
 	public String enrollLearner(String learnerId, String academyId) {
-		logger.info("entered enrollLearner method");
-
+		logger.info("entered enrollLearner method:{}");
 		Enrollment enrollment = new Enrollment();
 		enrollment.setEnrollmentDate(new Date());
+		
 		String url = baseUrl + "/" + academyId;
-
 		logger.info("url" + url);
 
 		ResponseEntity<Academy> academy = restTemplate.getForEntity(url, Academy.class);
@@ -57,10 +56,14 @@ public class EnrollmentService {
 
 	}
 
-	 public Enrollment getEnrollmentById(int enrollmentId) throws CustomException {
-	        return enrollmentRepository.findById(enrollmentId)
-	            .orElseThrow(() -> new CustomException("No Enrollment Record Found for ID: " + enrollmentId));
-	    }
+	public Enrollment getEnrollmentById(int enrollmentId) throws CustomException {
+		logger.info("Attempting to retrieve Enrollment with ID: {}", enrollmentId);
+		  return enrollmentRepository.findById(enrollmentId)
+		            .orElseThrow(() -> {
+		               logger.error("No Enrollment Record Found for ID: {}", enrollmentId);
+		                return new CustomException("No Enrollment Record Found for ID: " + enrollmentId);
+		            });
+	}
 	}
 
 	

@@ -2,6 +2,8 @@ package com.controller;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.regex.Pattern;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,12 +28,12 @@ public class AcademyController {
 
 	@GetMapping("/{academy_id}")
 	public ResponseEntity<Academy> getAcademyById(@PathVariable("academy_id") int id) throws CustomException {
-		logger.info("Accessed into getAcademyById mehtod with :academyid{}", id);
+		logger.info("Accessed into getAcademyById method with :academyid :{}", id);
 		Optional<Academy> academy = academyService.getAcademyById(id);
 		if (academy.isPresent()) {
 			return ResponseEntity.ok(academy.get());
 		} else {
-		logger.error("Verification failed for Acadmey  in Database with academyId:" + id);
+			logger.error("Verification failed for Acadmey  in Database with academyId:{}" + id);
 			throw new CustomException("No Acadmey Record Found " + id);
 		}
 	}
@@ -42,7 +44,7 @@ public class AcademyController {
 		logger.info("Accessed into getAcademiesBySportName mehtod with : sportName:{}", sportName);
 		List<Academy> academyList = academyService.findAcademiesBySportName(sportName);
 		if ((academyList.isEmpty())) {
-		logger.error("Verficaiton failed for Sport Acadmey  in Database with :sportName:{}", sportName);
+			logger.error("Verficaiton failed for Sport Acadmey  in Database with :sportName:{}", sportName);
 			throw new CustomException("No SportAcadmey Record Found for " + sportName);
 		} else {
 
@@ -50,4 +52,6 @@ public class AcademyController {
 
 		}
 	}
+
+
 }

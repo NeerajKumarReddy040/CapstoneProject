@@ -2,6 +2,8 @@ package com.model;
 
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -23,6 +25,7 @@ public class Enrollment {
 	private int academyId;
 
 	@Column(name = "enrollment_date")
+	@JsonFormat(pattern = "yyyy-MM-dd")
 	private Date enrollmentDate;
 	
 	@Column(name= "learner_id")

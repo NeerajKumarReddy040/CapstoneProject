@@ -3,12 +3,12 @@ package com.controller;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Pattern;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.client.RestTemplate;
 
 import com.dto.LearnerDTO;
 import com.exceptions.CustomException;
@@ -45,7 +44,7 @@ public class LearnerController {
 	// register
 	@PostMapping
 	public ResponseEntity<?> register(@Valid @RequestBody Learner learner) throws CustomException {
-		logger.info("Accessed into register method with input:", learner);
+		logger.info("Accessed into register method with input:{}", learner);
 		Learner register = new Learner();
 		register = learnerService.addNewLearner(learner);
 		logger.info("Your Registration Successfull");
@@ -55,15 +54,15 @@ public class LearnerController {
 	// login
 	@PostMapping("/login")
 	public ResponseEntity<?> loginCustomer(@Valid @RequestBody LearnerDTO learnerlogin) throws CustomException {
-		logger.info("Accessed into loginCustomer mehtod with input:", learnerlogin);
+		logger.info("Accessed into loginCustomer mehtod with input:{}", learnerlogin);
 		Learner l1 = learnerlogin.toEnity();
 		String customer = learnerService.verify(l1); // changed Learner to string
 		if (customer != null) {
 			logger.info("Your Email is verified");
 			return ResponseEntity.ok(customer);
 		}
-		return null; 
-		
+		return null;
+
 	}
 
 	// By SportName
@@ -73,6 +72,7 @@ public class LearnerController {
 		logger.info("Controller:Entered into getAcademyNamesBySportName method with input: sportName:{}", sportName);
 		Map<String, Object> response = new HashMap();// toprint response neat display
 		try {
+
 			List<Academy> academies = learnerService.getAcademyNamesBySportName(sportName);
 			if (academies.size() > 0) { // here size is method
 				response.put("academeis", academies);
@@ -84,10 +84,11 @@ public class LearnerController {
 			logger.info("retrived acadmeis", academies);
 			return new ResponseEntity<>(response, HttpStatus.OK);
 		} catch (Exception e) {
-			logger.error("The  Sport Acadmey does not match in the database", sportName);
-			throw new CustomException("No Sport Academy Found for SportName: " + sportName);
+			logger.error("The  Sport Acadmey does not match in the database:{}", sportName);
+			throw new CustomException("No Sport Academy Found for SportName:{} " + sportName);
 		}
 	}
+
 
 	// By AcademyId
 	@GetMapping("/{academy_id}")
@@ -101,14 +102,14 @@ public class LearnerController {
 			}
 		} catch (Exception e) {
 			logger.error("The Acadmey does not match in the database", id);
-			throw new CustomException("No Academy Found for AcademyId: " + id);
+			throw new CustomException("No Academy Found for AcademyId:{} " + id);
 		}
 		return null;
 	}
 
 	// enroll
 	@PostMapping(value = "/enroll")
-	public ResponseEntity<String> enroll(@RequestBody Map<String, Object> payload) throws CustomException {
+	public ResponseEntity<String> enroll( @RequestBody Map<String, Object> payload) throws CustomException {
 		logger.info("Contoller:entered into method::learnerId:{} ::academyId:{} ", payload.get("learnerId"),
 				payload.get("academyId"));
 		if (payload.get("academyId") == null) {
@@ -139,13 +140,11 @@ public class LearnerController {
 
 	// Enrollements
 	@GetMapping("/enrollments/{enrollment_id}")
-	public ResponseEntity<?> getEnrollmentsById(@PathVariable("enrollment_id") @Valid int enrollmentid) throws CustomException
-			 {
-		logger.info("Entered into getEnrollmentsById method with input: enrollmentId:{}", enrollmentid);
-		Enrollment enrollment = enrollmentService.getEnrollmentById(enrollmentid);
-		logger.info("The enrollemnt id provided present in the database", enrollmentid);
-		return ResponseEntity.ok(enrollment);
-
-	}
+    public ResponseEntity<Enrollment> getEnrollmentsById(@PathVariable("enrollment_id") int enrollmentId) throws CustomException {
+        logger.info("Entered getEnrollmentsById method with enrollmentId: {}", enrollmentId);
+        Enrollment enrollment = enrollmentService.getEnrollmentById(enrollmentId);
+        logger.info("Enrollment record found for ID: {}", enrollmentId);
+        return ResponseEntity.ok(enrollment);
+    }
 
 }

@@ -8,8 +8,11 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Past;
+import jakarta.validation.constraints.Size;
 
 @Entity
 @Table(name = "learner")
@@ -29,6 +32,7 @@ public class Learner {
 	private String gender;
 
 	@Column(name = "birthdate")
+	@Past(message = "Birthdate should be past")
 	@NotNull(message ="Birthdate is Required")
 	private Date birthdate;
 
@@ -37,14 +41,17 @@ public class Learner {
 	private String address;
 
 	@Column(name = "contact", length = 20)
+	@Size(min = 10, message = "The contact number should be 10 Charcters long")
 	@NotNull(message ="Contact Required")
 	private String contact;
 
 	@Column(name = "password_hash")
+	@Size(min = 8 , max= 12, message = "The password should be in between 8 to 12 Charcters long")
 	@NotEmpty(message ="Password is Required")
 	private String passwordHash;
 
 	@Column(name = "email", unique = true)
+	@Email(message = "Email should be valid")
 	@NotEmpty(message ="Email is required")
 	private String email;
 

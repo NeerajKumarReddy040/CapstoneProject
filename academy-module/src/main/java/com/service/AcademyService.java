@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Optional;
 
 import org.slf4j.Logger;
-
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,13 +19,15 @@ public class AcademyService {
 	AcademyRepository academyRepository;
 
 	public Optional<Academy> getAcademyById(int id) {
-		logger.info("academy details", academyRepository.findById(id));
+		logger.info("academy details {}", academyRepository.findById(id));
 		return academyRepository.findById(id);
 	}
 
 	public List<Academy> findAcademiesBySportName(String sportName) {
-		logger.info("academy details based on sportname", academyRepository.findAcademyBySportName(sportName));
+		logger.info("academy details based on sportname {}", academyRepository.findAcademyBySportName(sportName));
 
 		return academyRepository.findAcademyBySportName(sportName);
+
 	}
+
 }
